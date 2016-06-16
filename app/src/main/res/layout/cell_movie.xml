@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.enterprises.wayne.moviesapp.view.PosterImageView xmlns:android="http://schemas.android.com/apk/res/android"
+           android:id="@+id/imageViewPoster"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+           android:foreground="?attr/selectableItemBackground"
+           >
+
+</com.enterprises.wayne.moviesapp.view.PosterImageView>

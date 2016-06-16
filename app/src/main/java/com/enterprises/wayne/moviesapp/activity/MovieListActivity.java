@@ -3,6 +3,7 @@ package com.enterprises.wayne.moviesapp.activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.enterprises.wayne.moviesapp.R;
+import com.enterprises.wayne.moviesapp.adapter.MoviesAdapter;
 import com.enterprises.wayne.moviesapp.model.Movie;
 import com.enterprises.wayne.moviesapp.util.Constants;
 import com.enterprises.wayne.moviesapp.util.URLUtils;
@@ -30,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * An activity representing a list of Movies.
  */
-public class MovieListActivity extends AppCompatActivity
+public class MovieListActivity extends AppCompatActivity implements MoviesAdapter.Listener
 {
 
     /* UI */
@@ -44,6 +46,7 @@ public class MovieListActivity extends AppCompatActivity
     RecyclerView recyclerViewMovies;
 
     /* fields */
+    MoviesAdapter adapterMovies;
     private boolean mTwoPane;
 
     @Override
@@ -63,6 +66,12 @@ public class MovieListActivity extends AppCompatActivity
         // check if tablet or phone
         if (findViewById(R.id.movie_detail_container) != null)
             mTwoPane = true;
+
+        // setup recycler view
+        adapterMovies = new MoviesAdapter(this);
+        adapterMovies.setListener(this);
+        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerViewMovies.setAdapter(adapterMovies);
 
         // download movies
         getMovies();
@@ -107,9 +116,18 @@ public class MovieListActivity extends AppCompatActivity
                             return;
                         }
 
+                        // add to recycler view
+                        Log.e("Game", "movies size = " + movieList.size());
+                        adapterMovies.setData(movieList);
+
                     }
                 });
     }
 
 
+    @Override
+    public void onClick(Movie movie)
+    {
+
+    }
 }
