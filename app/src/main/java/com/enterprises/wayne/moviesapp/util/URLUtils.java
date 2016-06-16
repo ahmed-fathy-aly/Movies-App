@@ -17,7 +17,7 @@ public class URLUtils
      */
     public static String getMoviesUrl(String critrea)
     {
-        return  HOST + "movie/" + critrea + "?api_key=" + Keys.API_KEY;
+        return HOST + "movie/" + critrea + "?api_key=" + Keys.API_KEY;
     }
 
     /**
@@ -26,5 +26,13 @@ public class URLUtils
     public static String getPosterUrl(String posterPath)
     {
         return "http://image.tmdb.org/t/p/" + "w185" + posterPath;
+    }
+
+    /**
+     * GET request of a list of reviews of that movies
+     */
+    public static String getReviewsUtil(String movieId)
+    {
+        return HOST + "movie/" + movieId + "/reviews" + "?api_key=" + Keys.API_KEY;
     }
 }
