@@ -14,16 +14,6 @@
     >
 
 
-        <Spinner
-            android:id="@+id/spinnerDisplayChoices"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/displayChoices"
-            android:layout_gravity="right"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-            />
-
 </android.support.v7.widget.Toolbar>
 
 
