@@ -8,7 +8,7 @@
     <string name="readPlot" >Read Plot</string>
     <string name="topRated" >Top Rated</string>
     <string name="popular" >Popular</string>
-    <string name="favorites" >Favoties</string>
+    <string name="favorites" >Favorite</string>
 
     <array name="displayChoices">
         <item> @string/popular</item>
