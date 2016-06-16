@@ -4,4 +4,6 @@
     <string name="error">Error !</string>
     <string name="favorite">Mark as Favorite</string>
     <string name="Reviews">Reviews</string>
+    <string name="videos">Videos</string>
+    <string name="readPlot">Read Plot</string>
 </resources>

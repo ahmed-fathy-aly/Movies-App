@@ -3,12 +3,16 @@ package com.enterprises.wayne.moviesapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -30,11 +34,12 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * An activity representing a list of Movies.
  */
-public class MovieListActivity extends AppCompatActivity implements MoviesAdapter.Listener
+public class MovieListActivity extends AppCompatActivity implements MoviesAdapter.Listener, SwipeRefreshLayout.OnRefreshListener
 {
 
     /* UI */
@@ -42,10 +47,10 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
     LinearLayout parent;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.progressBar)
-    ProgressBar progressBar;
     @Bind(R.id.recyclerViewMovies)
     RecyclerView recyclerViewMovies;
+    @Bind(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     /* fields */
     MoviesAdapter adapterMovies;
@@ -61,7 +66,6 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         ButterKnife.bind(this);
 
         // setup toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
@@ -76,17 +80,37 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, coloumnsCount));
         recyclerViewMovies.setAdapter(adapterMovies);
 
+        // setup sweipe refresh
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         // download movies
         getMovies();
     }
+
+
+    @Override
+    public void onRefresh()
+    {
+        getMovies();
+    }
+
 
     /**
      * makes a GET request to fetch the list of movies and put them in the recycler-view
      */
     private void getMovies()
     {
-        progressBar.setVisibility(View.VISIBLE);
+        // start refreshing of swipe refresh]
+        swipeRefreshLayout.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
 
+        // make the request
         String url = URLUtils.getMoviesUrl(Constants.POPULAR);
         Ion.with(this)
                 .load("GET", url)
@@ -96,8 +120,16 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
                     @Override
                     public void onCompleted(Exception e, String result)
                     {
-                        progressBar.setVisibility(View.INVISIBLE);
 
+                        // end refreshing of swipe refresh
+                        swipeRefreshLayout.post(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        });
                         // check error
                         if (e != null)
                         {
@@ -146,4 +178,5 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
             startActivity(intent);
         }
     }
+
 }

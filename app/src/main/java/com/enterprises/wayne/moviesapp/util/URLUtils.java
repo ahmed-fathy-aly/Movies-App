@@ -35,4 +35,20 @@ public class URLUtils
     {
         return HOST + "movie/" + movieId + "/reviews" + "?api_key=" + Keys.API_KEY;
     }
+
+    /**
+     * GET request of a list of videos of that movie
+     */
+    public static String getVideosUrl(String movieId)
+    {
+        return HOST + "movie/" + movieId + "/videos" + "?api_key=" + Keys.API_KEY;
+    }
+
+    /**
+     * video url for youtube videos only
+     */
+    public static String getViewVideoUrl(String videoKey)
+    {
+        return "http://www.youtube.com/watch?v=" + videoKey;
+    }
 }

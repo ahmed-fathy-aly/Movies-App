@@ -15,16 +15,24 @@
     
     -->
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/recyclerViewMovies"
-                                            android:name="com.enterprises.wayne.moviesapp.MovieListFragment"
-                                            xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:tools="http://schemas.android.com/tools"
-                                            android:layout_width="0dp"
-                                            android:layout_weight="1"
-                                            android:layout_height="match_parent"
-                                            app:layoutManager="LinearLayoutManager"
-                                            tools:context=".activity.MovieListActivity"
-                                            tools:listitem="@layout/movie_list_content"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewMovies"
+            android:name="com.enterprises.wayne.moviesapp.MovieListFragment"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".activity.MovieListActivity"
+            tools:listitem="@layout/movie_list_content"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
         android:id="@+id/movie_detail_container"
