@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.enterprises.wayne.moviesapp.activity.MovieListActivity;
 import com.enterprises.wayne.moviesapp.dummy.DummyContent;
 
 /**

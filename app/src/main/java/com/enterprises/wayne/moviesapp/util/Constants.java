@@ -5,4 +5,6 @@ package com.enterprises.wayne.moviesapp.util;
  */
 public class Constants
 {
+
+    public static final String POPULAR = "popular";
 }

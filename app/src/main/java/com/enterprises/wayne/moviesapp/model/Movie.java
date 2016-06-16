@@ -95,14 +95,12 @@ public class Movie
     /**
      * parses a movie from a json
      */
-    public static Movie fromJson(String jsonString)
+    public static Movie fromJson(JSONObject json)
     {
         Movie movie = new Movie();
 
         try
         {
-            System.out.print("json string " + jsonString);
-            JSONObject json = new JSONObject(jsonString);
             System.out.println("json = " + json.toString());
             movie.setId(json.getString("id"));
             movie.setTitle(json.getString("title"));
