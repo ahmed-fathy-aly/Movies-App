@@ -5,5 +5,14 @@
     <string name="favorite">Mark as Favorite</string>
     <string name="Reviews">Reviews</string>
     <string name="videos">Videos</string>
-    <string name="readPlot">Read Plot</string>
+    <string name="readPlot" >Read Plot</string>
+    <string name="topRated" >Top Rated</string>
+    <string name="popular" >Popular</string>
+    <string name="favorites" >Favoties</string>
+
+    <array name="displayChoices">
+        <item> @string/popular</item>
+        <item> @string/topRated</item>
+        <item> @string/favorites</item>
+    </array>
 </resources>

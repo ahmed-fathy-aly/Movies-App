@@ -130,7 +130,7 @@ public class MovieDetailFragment extends Fragment
      */
     private void loadVideos()
     {
-        progressBarVideos.setVisibility(View.INVISIBLE);
+        progressBarVideos.setVisibility(View.VISIBLE);
 
         String url = URLUtils.getVideosUrl(movie.getId());
         Ion.with(getContext())

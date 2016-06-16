@@ -2,6 +2,7 @@ package com.enterprises.wayne.moviesapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     {
         this.data.clear();
         this.data.addAll(newData);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * deletes all the data and updates UI
+     */
+    public void clear()
+    {
+        data.clear();
+        notifyDataSetChanged();
     }
 
     /**
@@ -73,7 +84,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         if (movie.getPosterPath() != null)
             Picasso.with(context).
                     load(URLUtils.getPosterUrl(movie.getPosterPath()))
+                    .placeholder(R.drawable.ic_photo_black_48dp)
                     .into(holder.imageViewPoster);
+
     }
 
     @Override
@@ -81,6 +94,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     {
         return data.size();
     }
+
+
 
     class ViewHolder extends RecyclerView.ViewHolder
     {

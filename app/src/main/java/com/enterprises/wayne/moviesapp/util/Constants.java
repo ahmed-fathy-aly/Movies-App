@@ -6,6 +6,7 @@ package com.enterprises.wayne.moviesapp.util;
 public class Constants
 {
 
-    public static final String POPULAR = "popular";
     public static final String KEY_MOVIE = "movie";
+    public static final String POPULAR = "popular";
+    public static final String TOP_RATED = "top_rated";
 }

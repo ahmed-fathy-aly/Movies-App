@@ -13,8 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.enterprises.wayne.moviesapp.fragment.MovieDetailFragment;
 import com.enterprises.wayne.moviesapp.R;
@@ -51,6 +54,8 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
     RecyclerView recyclerViewMovies;
     @Bind(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
+    @Bind(R.id.spinnerDisplayChoices)
+    Spinner spinnerDisplayChoices;
 
     /* fields */
     MoviesAdapter adapterMovies;
@@ -80,8 +85,25 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, coloumnsCount));
         recyclerViewMovies.setAdapter(adapterMovies);
 
-        // setup sweipe refresh
+        // setup swipe refresh
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        // add listener to spinner
+        spinnerDisplayChoices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                adapterMovies.clear();
+                getMovies();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
 
         // download movies
         getMovies();
@@ -100,6 +122,11 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
      */
     private void getMovies()
     {
+        // check the display choice
+        String choiceStr = (String) spinnerDisplayChoices.getSelectedItem();
+        if (choiceStr.equals(getString(R.string.favorites)))
+            return;
+
         // start refreshing of swipe refresh]
         swipeRefreshLayout.post(new Runnable()
         {
@@ -111,7 +138,8 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         });
 
         // make the request
-        String url = URLUtils.getMoviesUrl(Constants.POPULAR);
+        String criterea = choiceStr.equals(getString(R.string.popular))? Constants.POPULAR : Constants.TOP_RATED;
+        String url = URLUtils.getMoviesUrl(criterea);
         Ion.with(this)
                 .load("GET", url)
                 .asString()
@@ -120,6 +148,7 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
                     @Override
                     public void onCompleted(Exception e, String result)
                     {
+
 
                         // end refreshing of swipe refresh
                         swipeRefreshLayout.post(new Runnable()
