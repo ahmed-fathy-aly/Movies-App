@@ -197,7 +197,7 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
                         for (Movie movie : movieList)
                             if (favoritedIds.contains(movie.getId()))
                                 movie.setFavorite(true);
-                        
+
                         // add to recycler view
                         adapterMovies.setData(movieList);
 

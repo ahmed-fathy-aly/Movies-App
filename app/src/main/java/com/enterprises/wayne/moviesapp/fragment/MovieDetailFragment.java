@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -271,15 +272,32 @@ public class MovieDetailFragment extends Fragment
     private void addReviewRow(Review review)
     {
         // inflate row
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.row_review, null);
+        final View view = LayoutInflater.from(getContext()).inflate(R.layout.row_review, null);
 
         // reference view
         TextView textViewAuthor = (TextView) view.findViewById(R.id.textViewAuthor);
-        TextView textViewContent = (TextView) view.findViewById(R.id.textViewContent);
+        final TextView textViewContent = (TextView) view.findViewById(R.id.textViewContent);
+        final CardView cardViewReview = (CardView) view.findViewById(R.id.cardViewReview);
 
         // populate data
         textViewAuthor.setText(review.getAuthor());
         textViewContent.setText(review.getContent());
+
+        // add listener to expand the review on clicked
+        cardViewReview.setOnClickListener(new DebouncingOnClickListener()
+        {
+            @Override
+            public void doClick(View v)
+            {
+                // set the transition type to the cardview
+                LayoutTransition l = new LayoutTransition();
+                l.enableTransitionType(LayoutTransition.CHANGING);
+                cardViewReview.setLayoutTransition(l);
+
+                // expand the text
+                textViewContent.setMaxLines(Integer.MAX_VALUE);
+            }
+        });
 
         // add to layout
         layoutReviews.addView(view);
