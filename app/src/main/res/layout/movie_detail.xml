@@ -7,6 +7,7 @@
     tools:context=".fragment.MovieDetailFragment">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -35,7 +36,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                     android:ellipsize="end"
+                        android:ellipsize="end"
                         android:maxLines="2"
                         android:textColor="@color/white"
                         android:textSize="24sp"/>
@@ -62,7 +63,7 @@
                 <LinearLayout
                     android:id="@+id/expandableLinearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="wrap_content"
                     android:minHeight="120dp"
                     android:orientation="horizontal">
 
@@ -93,6 +94,8 @@
                                 android:id="@+id/textViewPlot"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:ellipsize="end"
+                                android:maxLines="3"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
                                 />
@@ -170,5 +173,13 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_favorite_white_24dp"/>
 
 </FrameLayout>

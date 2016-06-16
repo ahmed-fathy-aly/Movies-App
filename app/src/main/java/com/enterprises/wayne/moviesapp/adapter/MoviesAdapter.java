@@ -60,6 +60,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+
+    /**
+     * finds this movie and the data and set it to favorited
+     */
+    public void setMovieFavorited(int movieId)
+    {
+        for (Movie movie : data)
+            if (movie.getId() == movieId)
+                movie.setFavorite(true);
+    }
+
+
     /**
      * registers to be invoked for callbacks
      */
@@ -94,7 +106,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     {
         return data.size();
     }
-
 
 
     class ViewHolder extends RecyclerView.ViewHolder

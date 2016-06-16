@@ -1,7 +1,5 @@
 package com.enterprises.wayne.moviesapp.model;
 
-import android.util.Log;
-
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -13,22 +11,22 @@ import java.util.StringTokenizer;
 public class Movie implements Serializable
 {
     /* fields */
-    private String id;
+    private int id;
     private String title;
     private String plot;
     private String releaseDate;
     private String posterPath;
     private double vote;
-    private boolean hasVideo;
+    private boolean isFavorite;
 
     /* getters and setters */
 
-    public String getId()
+    public int getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(int id)
     {
         this.id = id;
     }
@@ -83,14 +81,14 @@ public class Movie implements Serializable
         this.vote = vote;
     }
 
-    public boolean isHasVideo()
+    public boolean isFavorite()
     {
-        return hasVideo;
+        return isFavorite;
     }
 
-    public void setHasVideo(boolean hasVideo)
+    public void setFavorite(boolean favorite)
     {
-        this.hasVideo = hasVideo;
+        this.isFavorite = favorite;
     }
 
     /* methods */
@@ -105,13 +103,12 @@ public class Movie implements Serializable
         try
         {
             System.out.println("json = " + json.toString());
-            movie.setId(json.getString("id"));
+            movie.setId(json.getInt("id"));
             movie.setTitle(json.getString("title"));
             movie.setPlot(json.getString("overview"));
             movie.setReleaseDate(json.getString("release_date"));
             movie.setPosterPath(json.getString("poster_path"));
             movie.setVote(json.getDouble("vote_average"));
-            movie.setHasVideo(json.getBoolean("video"));
         } catch (Exception e)
         {
             System.out.println("error " + e.getMessage());

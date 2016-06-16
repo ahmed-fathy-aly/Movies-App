@@ -8,6 +8,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
@@ -20,9 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.enterprises.wayne.moviesapp.R;
+import com.enterprises.wayne.moviesapp.database.DatabaseHelper;
+import com.enterprises.wayne.moviesapp.events.MovieFavoritedEvent;
 import com.enterprises.wayne.moviesapp.model.Movie;
 import com.enterprises.wayne.moviesapp.model.Review;
 import com.enterprises.wayne.moviesapp.model.Video;
@@ -32,6 +36,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,6 +78,10 @@ public class MovieDetailFragment extends Fragment
     LinearLayout expandableLayout;
     @Bind(R.id.buttonReadPlot)
     Button buttonReadPlot;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
 
     /* fields */
     Movie movie;
@@ -84,6 +93,7 @@ public class MovieDetailFragment extends Fragment
     public MovieDetailFragment()
     {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -122,6 +132,11 @@ public class MovieDetailFragment extends Fragment
         // load reviews and videos
         loadReviews();
         loadVideos();
+
+        // hide the favorite fab if it's already in favorites
+        if (movie.isFavorite())
+            fab.hide();
+
         return rootView;
     }
 
@@ -301,13 +316,26 @@ public class MovieDetailFragment extends Fragment
                 buttonReadPlot.setVisibility(View.GONE);
 
                 // expand the layout
-                ViewGroup.LayoutParams expandableLayoutParams = expandableLayout.getLayoutParams();
-                expandableLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                expandableLayout.setLayoutParams(expandableLayoutParams);
+                textViewPlot.setMaxLines(Integer.MAX_VALUE);
 
             }
         }, l.getDuration(LayoutTransition.CHANGING));
-
-
     }
+
+    @OnClick(R.id.fab)
+    void favoriteMovie()
+    {
+        // hide the fab
+        fab.hide();
+
+        // add to database
+        movie.setFavorite(true);
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+        databaseHelper.addMovie(movie);
+
+        // notify any one waiting for a movie to be favorited
+        EventBus.getDefault().post(new MovieFavoritedEvent(movie));
+    }
+
+
 }

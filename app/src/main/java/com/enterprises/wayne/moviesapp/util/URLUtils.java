@@ -31,7 +31,7 @@ public class URLUtils
     /**
      * GET request of a list of reviews of that movies
      */
-    public static String getReviewsUtil(String movieId)
+    public static String getReviewsUtil(int movieId)
     {
         return HOST + "movie/" + movieId + "/reviews" + "?api_key=" + Keys.API_KEY;
     }
@@ -39,7 +39,7 @@ public class URLUtils
     /**
      * GET request of a list of videos of that movie
      */
-    public static String getVideosUrl(String movieId)
+    public static String getVideosUrl(int movieId)
     {
         return HOST + "movie/" + movieId + "/videos" + "?api_key=" + Keys.API_KEY;
     }
