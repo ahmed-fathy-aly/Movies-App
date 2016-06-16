@@ -1,5 +1,6 @@
 package com.enterprises.wayne.moviesapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.enterprises.wayne.moviesapp.fragment.MovieDetailFragment;
 import com.enterprises.wayne.moviesapp.R;
 import com.enterprises.wayne.moviesapp.adapter.MoviesAdapter;
 import com.enterprises.wayne.moviesapp.model.Movie;
@@ -70,7 +72,8 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         // setup recycler view
         adapterMovies = new MoviesAdapter(this);
         adapterMovies.setListener(this);
-        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 2));
+        int coloumnsCount = mTwoPane ? 3 : 2;
+        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, coloumnsCount));
         recyclerViewMovies.setAdapter(adapterMovies);
 
         // download movies
@@ -117,7 +120,6 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
                         }
 
                         // add to recycler view
-                        Log.e("Game", "movies size = " + movieList.size());
                         adapterMovies.setData(movieList);
 
                     }
@@ -128,6 +130,20 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
     @Override
     public void onClick(Movie movie)
     {
-
+        if (mTwoPane)
+        {
+            Bundle arguments = new Bundle();
+            arguments.putSerializable(Constants.KEY_MOVIE, movie);
+            MovieDetailFragment fragment = new MovieDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.movie_detail_container, fragment)
+                    .commit();
+        } else
+        {
+            Intent intent = new Intent(this, MovieDetailActivity.class);
+            intent.putExtra(Constants.KEY_MOVIE, movie);
+            startActivity(intent);
+        }
     }
 }

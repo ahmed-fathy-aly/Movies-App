@@ -4,10 +4,13 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.util.StringTokenizer;
+
 /**
  * Created by ahmed on 6/16/2016.
  */
-public class Movie
+public class Movie implements Serializable
 {
     /* fields */
     private String id;
@@ -115,5 +118,14 @@ public class Movie
         }
 
         return movie;
+    }
+
+    /**
+     * seperates the year field from the release date
+     */
+    public String getYear()
+    {
+        StringTokenizer tok = new StringTokenizer(releaseDate, "-");
+        return tok.nextToken();
     }
 }

@@ -7,4 +7,5 @@ public class Constants
 {
 
     public static final String POPULAR = "popular";
+    public static final String KEY_MOVIE = "movie";
 }
