@@ -249,5 +249,12 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         // update the movie's isFavorite field so if the user clicks on that movie again, it will
         // show in the details screen as already favorited
         adapterMovies.setMovieFavorited(movieFavoritedEvent.getMovie().getId());
+
+        // if we are on the favorites screen and it's not in the adapter then add it now
+        String choiceStr = (String) spinnerDisplayChoices.getSelectedItem();
+        if (choiceStr.equals(getString(R.string.favorites))
+                && !adapterMovies.contains(movieFavoritedEvent.getMovie().getId()))
+            adapterMovies.add(movieFavoritedEvent.getMovie());
+
     }
 }

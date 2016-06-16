@@ -52,6 +52,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     }
 
     /**
+     * add an item and updates UI
+     */
+    public void add(Movie movie)
+    {
+        this.data.add(movie);
+        notifyItemInserted(this.data.size() - 1);
+    }
+
+    /**
      * deletes all the data and updates UI
      */
     public void clear()
@@ -69,6 +78,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         for (Movie movie : data)
             if (movie.getId() == movieId)
                 movie.setFavorite(true);
+    }
+
+
+    /**
+     * check if the data contains a movie with that id
+     */
+    public boolean contains(int movieId)
+    {
+        for (Movie movie : data)
+            if (movie.getId() == movieId)
+                return true;
+        return false;
     }
 
 
@@ -106,6 +127,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     {
         return data.size();
     }
+
 
 
     class ViewHolder extends RecyclerView.ViewHolder
